@@ -4,10 +4,9 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const TicketForm = () => {
-  
-    const router = useRouter()
-  
-    const handleChange = (e) => {
+  const router = useRouter();
+
+  const handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
 
@@ -20,17 +19,17 @@ const TicketForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch("/api/Tickets", {
-        method: "POST",
-        body: JSON.stringify({formData}),
-        "content-type": "application/json"
-    })
+      method: "POST",
+      body: JSON.stringify({ formData }),
+      "content-type": "application/json",
+    });
 
     if (!res.ok) {
-        throw new Error("Failed to create Ticket.");
+      throw new Error("Failed to create Ticket.");
     }
 
-    router.refresh()
-    router.push("/")
+    router.refresh();
+    router.push("/");
   };
 
   const startingTicketData = {
@@ -144,14 +143,10 @@ const TicketForm = () => {
           onChange={handleChange}
         />
         <label>Status</label>
-        <select
-          name="status"
-          value={formData.status}
-          onChange={handleChange}
-        >
-            <option value="not-started">Not Started</option>
-            <option value="in-progress">In Progress</option>
-            <option value="done">Done</option>
+        <select name="status" value={formData.status} onChange={handleChange}>
+          <option value="not-started">Not Started</option>
+          <option value="in-progress">In Progress</option>
+          <option value="done">Done</option>
         </select>
         <input type="submit" className="btn" value="Create Ticket" />
       </form>
